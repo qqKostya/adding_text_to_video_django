@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import time
 
+
 def generate_video(text, output_path):
     width, height = 100, 100
     fps = 30
@@ -20,7 +21,9 @@ def generate_video(text, output_path):
 
     for _ in range(duration * fps):
         frame = np.full((height, width, 3), background_color, dtype=np.uint8)
-        cv2.putText(frame, text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1, text_color, 2, cv2.LINE_AA)
+        cv2.putText(
+            frame, text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1, text_color, 2, cv2.LINE_AA
+        )
         video.write(frame)
         x -= 4
 

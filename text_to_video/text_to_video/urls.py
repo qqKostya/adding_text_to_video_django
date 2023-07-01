@@ -4,7 +4,7 @@ from django.urls import include, path
 
 urlpatterns = [
     # ...
-    path('video_generator/', include('video_generator.urls')),
+    path("video_generator/", include("video_generator.urls")),
 ]
 
 if settings.DEBUG:
