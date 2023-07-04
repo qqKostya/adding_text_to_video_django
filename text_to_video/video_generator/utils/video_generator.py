@@ -19,12 +19,21 @@ def generate_video(text, output_path):
     text_color = (255, 255, 255)
     background_color = (0, 255, 0)
 
+
+    text_length = len(text)
+    speed = int((width + text_length * text_length) / (duration * fps))
+    if speed == 0:
+        speed = 1
+
     for _ in range(duration * fps):
         frame = np.full((height, width, 3), background_color, dtype=np.uint8)
+
+        
+
         cv2.putText(
             frame, text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1, text_color, 2, cv2.LINE_AA
         )
         video.write(frame)
-        x -= 4
+        x -= speed
 
     video.release()
