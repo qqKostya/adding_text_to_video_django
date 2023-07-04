@@ -1,6 +1,8 @@
+from PIL import Image, ImageDraw, ImageFont
 import cv2
 import numpy as np
 import time
+import os
 
 
 def generate_video(text, output_path):
@@ -19,20 +21,22 @@ def generate_video(text, output_path):
     text_color = (255, 255, 255)
     background_color = (0, 255, 0)
 
-
     text_length = len(text)
     speed = int((width + text_length * text_length) / (duration * fps))
     if speed == 0:
         speed = 1
 
+    font_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Roboto-Regular.ttf")
+    font_size = 20
+    font = ImageFont.truetype(font_path, font_size)
+
     for _ in range(duration * fps):
         frame = np.full((height, width, 3), background_color, dtype=np.uint8)
+        img_pil = Image.fromarray(frame)
+        draw = ImageDraw.Draw(img_pil)
+        draw.text((x, y), text, font=font, fill=text_color)
+        frame = np.array(img_pil)
 
-        
-
-        cv2.putText(
-            frame, text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1, text_color, 2, cv2.LINE_AA
-        )
         video.write(frame)
         x -= speed
 

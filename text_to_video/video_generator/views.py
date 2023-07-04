@@ -3,10 +3,12 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from .utils.video_generator import generate_video
 from .models import Request
+from urllib.parse import unquote
+
 
 
 def generate_video_view(request):
-    text = request.GET.get("text", "")
+    text = unquote(request.GET.get("text", ""))
     output_path = "media/videos/"
     generate_video(text, output_path)
 
